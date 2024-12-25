@@ -9,6 +9,11 @@ app = Flask(__name__)
 # ____________________________________
 # get HTTP method
 
+@app.route("/")
+def root():
+    return "Welcome to the app! Visit /learning/entries for more."
+
+
 @app.route('/learning/entries')
 def get_Learnig_Entries():
     data = getLearnigEntries()
