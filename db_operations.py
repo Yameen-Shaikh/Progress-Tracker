@@ -3,8 +3,8 @@ from db_queries import *
 from datetime import datetime
 
 
-# ____________________________________
-# common functions
+#____________________________________ common functions ____________________________________
+
 def db_connection():
     try:
         connection = psycopg2.connect(
@@ -31,19 +31,31 @@ def insertIntoTable(query):
     # Add your insert logic here
     return
 
-# ____________________________________
-# get functions
+#____________________________________ select functions ____________________________________
 
-def getLearnigEntries():
+def getLearnigEntry(id):  
+    final_data = []
+    return final_data
+
+def getLearnigEntries():  
     rows = getTableRows(ALL_LEARNING_ENTRIES)
-    return rows
+    
+    final_data = []
+    for (id, date, learning) in rows:
+        item = {
+                    'id': id,
+                    'date': date,
+                    'learning': learning,
+                }
+        final_data.append(item)
+
+    return final_data
 
 def getSubjects():
     rows = getTableRows(ALL_SUBJECTS)
     return rows
 
-# ____________________________________
-# insert functions
+#____________________________________ insert functions ____________________________________
  
 def addTableRows(query, data): #Here you have to passs the query and data parameter
     conn = db_connection()
@@ -60,10 +72,21 @@ def addLearnigEntries(date, learning): #Here u dont need to pass query as it wil
     return {"message": "Entry added successfully!"}  # Return a success message
 
 
+#____________________________________ update functions ____________________________________
 
-# ____________________________________
-# update functions
+def UpdateRows(query, data): #Here you have to passs the query and data parameter
+    conn = db_connection()
+    cur = conn.cursor()
+    cur.execute(query, data)  
+    conn.commit()
+    cur.close()
+    conn.close()
 
+def UpdateLearningEntries(date, learning):
+    query = UPDATE_LEARNING_ENTRIES
+    data = (date, learning)
+    UpdateRows(query, data)
+    return {"message": "Updated successfully! 👍"} 
 
 
 # ____________________________________
