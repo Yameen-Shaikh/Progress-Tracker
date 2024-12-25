@@ -28,7 +28,7 @@ def get_Subjects():
 # ____________________________________
 # post HTTP method
 
-@app.route('/add/learning', methods=['POST'])
+@app.route('/add/learning', methods=["POST"])
 def add_learnings():
     data = request.get_json() #Here the get the data by post and in json
     date = data.get("date")  
